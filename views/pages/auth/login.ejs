@@ -1,0 +1,53 @@
+<%- include('../../partials/head') %> <% if (flashSuccess && flashSuccess.length
+> 0) { %>
+<div class="alert alert-success custom-flash custom-success">
+  <%= flashSuccess[0] %>
+</div>
+<% } %> <% if (flashError && flashError.length > 0) { %>
+<div class="alert alert-danger custom-flash custom-danger">
+  <%= flashError[0] %>
+</div>
+<% } %>
+<div class="d-flex vh-100 align-items-center justify-content-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+        <div class="login-form shadow-sm rounded p-4 p-lg-5">
+          <a href="/"
+            ><img
+              src="/images/mwc-logo.png"
+              style="display: block; width: 60px; margin: 0 auto"
+              alt="Logo"
+          /></a>
+          <h4 class="text-center mt-2">স্বাগতম!</h4>
+          <form action="/auth/login" method="post">
+            <div class="form-group mt-5 mb-3">
+              <label class="mb-2" for="username">আপনার ইউজার নাম</label>
+              <input type="text" id="username" class="form-control <%=
+              error.username && "is-invalid" %>" name="username" value="<%=
+              value.username || "" %>"/>
+              <div class="invalid-feedback">
+                <%= error.username && error.username %>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label class="mb-2" for="password">আপনার পাসওয়ার্ড</label>
+              <input type="password" id="password" class="form-control <%=
+              error.password && "is-invalid" %>" name="password" value="<%=
+              value.password || "" %>"/>
+              <div class="invalid-feedback">
+                <%= error.password && error.password %>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <input type="submit" class="btn btn-dark w-100" value="লগইন" />
+            </div>
+          </form>
+          <a class="text-decoration-none text-dark" href="/auth/signup"
+            >একাউন্ট তৈরি করা হয় নি? সাইন আপ করুন</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

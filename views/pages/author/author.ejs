@@ -1,0 +1,101 @@
+<%- include('../../partials/header') %>
+
+<div class="d-flex justify-content-center">
+  <div class="container">
+    <div class="col-lg-12 offset-lg-0 col-md-12 offset-md-0">
+      <div class="row">
+        <div class="col-lg-12 offset-lg-0 my-4">
+          <!-- Author Info -->
+          <div class="text-center mb-5">
+            <img
+              src="<%= profile.profilePic %>"
+              alt="<%= profile.name %>"
+              class="rounded-circle shadow-sm"
+              width="100"
+              height="100"
+            />
+            <h3 class="mt-3"><%= profile.name %></h3>
+            <p class="text-muted"><%= profile.title || 'লেখক' %></p>
+          </div>
+
+          <!-- Author Posts Grid -->
+          <% if (posts && posts.length > 0) { %>
+          <div class="row">
+            <% posts.forEach(post => { %>
+            <div class="col-md-6 col-lg-4 mb-4">
+              <div class="card h-100 shadow-sm border-0">
+                <img
+                  src="<%= post.thumbnail %>"
+                  class="card-img-top img-fluid"
+                  alt="Thumbnail"
+                  style="height: 250px; object-fit: cover"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a
+                      href="/dashboard/post/single/<%= post._id %>"
+                      class="text-decoration-none text-dark"
+                      ><%= post.title %></a
+                    >
+                  </h5>
+                  <p class="card-text text-muted" style="font-size: 0.9rem">
+                    প্রকাশিতঃ <%= new
+                    Date(post.createdAt).toLocaleDateString('bn-BD', { year:
+                    'numeric', month: 'long', day: 'numeric' }) %> • <%=
+                    post.readTime %> মিনিট পড়া
+                  </p>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+          </div>
+          <% } else { %>
+          <p class="text-center text-muted">
+            এই লেখকের কোনো পোস্ট পাওয়া যায়নি।
+          </p>
+          <% } %>
+
+          <!-- pagination -->
+          <% if (totalPages > 1) { %>
+          <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+              <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+                <a
+                  class="page-link px-4 py-1 rounded-pill text-dark border-0 shadow-sm me-2"
+                  href="/author/<%= profile._id %>?page=<%= currentPage - 1 %>"
+                >
+                  পূর্ববর্তী
+                </a>
+              </li>
+
+              <% for (let i = 1; i <= totalPages; i++) { %>
+              <li class="page-item">
+                <a
+                  class="page-link px-3 py-1 rounded-pill <%= i !== totalPages ? 'me-2' : '' %> <%= currentPage === i ? 'bg-dark text-white border-0' : 'text-dark border' %>"
+                  href="/author/<%= profile._id %>?page=<%= i %>"
+                >
+                  <%= toBangla(i) %>
+                </a>
+              </li>
+              <% } %>
+
+              <li
+                class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>"
+              >
+                <a
+                  class="page-link px-4 py-1 rounded-pill text-dark border-0 shadow-sm ms-2"
+                  href="/author/<%= profile._id %>?page=<%= currentPage + 1 %>"
+                >
+                  পরবর্তী
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../../partials/footer') %>

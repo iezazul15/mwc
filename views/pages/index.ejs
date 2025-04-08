@@ -1,0 +1,155 @@
+<%- include('../partials/header') %> <% if (flashSuccess && flashSuccess.length
+> 0) { %>
+<div class="alert alert-success custom-flash custom-success">
+  <%= flashSuccess[0] %>
+</div>
+<% } %>
+<div class="container mt-4">
+  <div class="row">
+    <% if (posts.length > 0) { %> <% posts.forEach(post => { %>
+    <div class="col-md-12 col-lg-4 mb-4 custom-col">
+      <div class="card blog-card shadow-sm border-0">
+        <img
+          src="<%= post.thumbnail %>"
+          class="card-img-top"
+          alt="Blog Image"
+        />
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+              >
+                <path
+                  d="M368.4 18.3L312.7 74.1 437.9 199.3l55.7-55.7c21.9-21.9 21.9-57.3 0-79.2L447.6 18.3c-21.9-21.9-57.3-21.9-79.2 0zM288 94.6l-9.2 2.8L134.7 140.6c-19.9 6-35.7 21.2-42.3 41L3.8 445.8c-3.8 11.3-1 23.9 7.3 32.4L164.7 324.7c-3-6.3-4.7-13.3-4.7-20.7c0-26.5 21.5-48 48-48s48 21.5 48 48s-21.5 48-48 48c-7.4 0-14.4-1.7-20.7-4.7L33.7 500.9c8.6 8.3 21.1 11.2 32.4 7.3l264.3-88.6c19.7-6.6 35-22.4 41-42.3l43.2-144.1 2.7-9.2L288 94.6z"
+                />
+              </svg>
+              <small class="text-muted"
+                ><a
+                  href="/author/<%= post.author._id %>"
+                  class="text-decoration-none text-muted"
+                  ><%= post.author.name %></a
+                ></small
+              >
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="15"
+                height="15"
+              >
+                <path
+                  d="M256 0a256 256 0 1 1 0 512A256 256 0 1 1 256 0zM232 120l0 136c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2 280 120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"
+                />
+              </svg>
+              <small class="text-muted"><%= post.readTime %> মিনিট</small>
+            </div>
+          </div>
+          <h5 class="card-title fw-semibold">
+            <%= post.title.length > 74 ? post.title.slice(0,
+            post.title.lastIndexOf(" ", 74)) + ' ...' : post.title %>
+          </h5>
+          <p class="card-text text-muted">
+            <%= post.description.length > 100 ? post.description.replace('.',
+            '').slice(0, post.description.lastIndexOf(" ", 100)) + ' ...' :
+            post.description %>
+          </p>
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <div>
+              <a
+                href="/dashboard/post/single/<%= post._id %>"
+                class="btn btn-dark btn-sm px-4 mb-2"
+                >আরও পড়ুন</a
+              >
+              <% if (user && profile && profile._id && profile._id.toString()
+              === post.author._id.toString()) { %>
+              <a
+                href="/dashboard/post/edit/<%= post._id %>"
+                class="btn btn-outline-dark btn-sm px-4 mb-2"
+                >এডিট</a
+              >
+              <% } %>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"
+                width="15"
+                height="15"
+                class="d-inline-block"
+              >
+                <path
+                  d="M96 32l0 32L48 64C21.5 64 0 85.5 0 112l0 48 448 0 0-48c0-26.5-21.5-48-48-48l-48 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L160 64l0-32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192L0 192 0 464c0 26.5 21.5 48 48 48l352 0c26.5 0 48-21.5 48-48l0-272z"
+                />
+              </svg>
+              <small class="text-muted"
+                ><%= post.createdAt.toLocaleDateString('bn-BD', {year:
+                'numeric', month: 'long', day: 'numeric'}) %></small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% }) %> <% } else { %>
+    <h2 class="text-center">কোনো পোস্ট খুঁজে পাওয়া যায় নি</h2>
+    <% } %> <% if (totalPages > 1) { %>
+    <nav aria-label="Page navigation" class="mt-5">
+      <ul class="pagination justify-content-center">
+        <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+          <a
+            class="page-link px-4 py-1 rounded-pill text-dark border-0 shadow-sm me-2"
+            href="/?page=<%= currentPage - 1 %>"
+          >
+            পূর্ববর্তী
+          </a>
+        </li>
+
+        <% for (let i = 1; i <= totalPages; i++) { %>
+        <li class="page-item">
+          <a
+            class="page-link px-3 py-1 rounded-pill <%= i !== totalPages ? 'me-2' : '' %> <%= currentPage === i ? 'bg-dark text-white border-0' : 'text-dark border' %>"
+            href="/?page=<%= i %>"
+          >
+            <%= toBangla(i) %>
+          </a>
+        </li>
+        <% } %>
+
+        <li
+          class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>"
+        >
+          <a
+            class="page-link px-4 py-1 rounded-pill text-dark border-0 shadow-sm ms-2"
+            href="/?page=<%= currentPage + 1 %>"
+          >
+            পরবর্তী
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <% } %>
+  </div>
+</div>
+
+<div class="create-btn">
+  <a href="/dashboard/post/create">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 512 512"
+      width="24"
+      height="24"
+      fill="#000000"
+    >
+      <path
+        d="M368.4 18.3L312.7 74.1 437.9 199.3l55.7-55.7c21.9-21.9 21.9-57.3 0-79.2L447.6 18.3c-21.9-21.9-57.3-21.9-79.2 0zM288 94.6l-9.2 2.8L134.7 140.6c-19.9 6-35.7 21.2-42.3 41L3.8 445.8c-3.8 11.3-1 23.9 7.3 32.4L164.7 324.7c-3-6.3-4.7-13.3-4.7-20.7c0-26.5 21.5-48 48-48s48 21.5 48 48s-21.5 48-48 48c-7.4 0-14.4-1.7-20.7-4.7L33.7 500.9c8.6 8.3 21.1 11.2 32.4 7.3l264.3-88.6c19.7-6.6 35-22.4 41-42.3l43.2-144.1 2.7-9.2L288 94.6z"
+      />
+    </svg>
+  </a>
+</div>
+
+<%- include('../partials/footer') %>

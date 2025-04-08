@@ -1,0 +1,105 @@
+<nav class="navbar navbar-expand-lg glass-navbar shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-semibold" href="/"
+      ><img
+        src="/images/mwc-logo.png"
+        style="width: 50px; height: auto"
+        alt="Logo"
+      />
+      <div
+        class="beta-badge badge bg-secondary text-secondary-foreground px-2 py-1 rounded fw-normal"
+      >
+        BETA
+      </div>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active fw-normal" href="/">হোম</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active fw-normal" href="/dashboard">ড্যাশবোর্ড</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active fw-normal" href="/dashboard/activity"
+            >অ্যাক্টিভিজম</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active fw-normal" href="/donation">ডোনেশন</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search" method="get" action="/search">
+        <input
+          class="form-control me-2 glass-input"
+          type="search"
+          name="s"
+          placeholder="আপনার কুয়েরি..."
+          aria-label="Search"
+        />
+        <button class="nav-search-btn btn btn-dark btn-sm px-3" type="submit">
+          সার্চ করুন
+        </button>
+      </form>
+      <% if (isLoggedIn) { %>
+      <div class="mt-2 mt-lg-0 ms-lg-5 d-flex align-items-center">
+        <img
+          src="<%= user.profilePic %>"
+          alt="Profile Pic"
+          class="nav-profile-pic"
+        />
+        <div class="dropdown">
+          <a
+            class="px-0 py-2 me-2 text-decoration-none text-dark dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            href="/dashboard"
+          >
+            <%= user.username %>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="/dashboard/edit-profile"
+                >প্রোফাইল এডিট</a
+              >
+            </li>
+            <li><a class="dropdown-item" href="/auth/logout">লগ আউট</a></li>
+          </ul>
+        </div>
+      </div>
+      <% } else { %>
+      <div class="mt-2 mt-lg-0 ms-lg-5 d-flex align-items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 640 512"
+          width="20"
+          height="20"
+          class="me-2"
+        >
+          <path
+            d="M96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3zM504 312l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"
+          />
+        </svg>
+        <a
+          class="px-0 py-2 me-2 text-decoration-none text-dark"
+          href="/auth/login"
+        >
+          লগইন
+        </a>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</nav>

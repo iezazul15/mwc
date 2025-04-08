@@ -1,0 +1,106 @@
+<%- include('../../partials/header') %> <% if (flashSuccess &&
+flashSuccess.length > 0) { %>
+<div class="alert alert-success custom-flash custom-success">
+  <%= flashSuccess[0] %>
+</div>
+<% } %><% if (flashError && flashError.length > 0) { %>
+<div class="alert alert-danger custom-flash custom-danger">
+  <%= flashError[0] %>
+</div>
+<% } %>
+<div class="container my-4">
+  <!-- Navigation Tabs -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <ul class="nav nav-tabs justify-content-center border-0">
+        <li class="nav-item">
+          <a
+            class="nav-link active text-white bg-dark rounded me-2"
+            href="/dashboard"
+            >সামগ্রিক তথ্য</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-dark bg-white rounded me-2"
+            href="/dashboard/edit-profile"
+            >প্রোফাইল এডিট</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-dark bg-white rounded me-2"
+            href="/dashboard/posts"
+            >সব পোস্ট</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-dark bg-white rounded me-2"
+            href="/dashboard/bookmarks"
+            >বুকমার্কস</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Profile + Info Section -->
+  <div class="row mb-5 align-items-center">
+    <!-- Profile Pic -->
+    <div class="col-md-4 text-center mb-4 mb-md-0">
+      <img
+        src="<%= user.profilePic %>"
+        alt="Profile Pic"
+        class="img-fluid rounded-circle shadow-sm"
+        style="max-width: 150px"
+      />
+    </div>
+
+    <!-- User Info -->
+    <div class="col-md-8">
+      <h5 class="text-dark mb-2">ইউজারের তথ্য</h5>
+      <p class="mb-1 text-muted">
+        <strong>ইউজারঃ</strong> <%= profile.user.username %>
+      </p>
+      <p class="mb-1 text-muted"><strong>নামঃ</strong> <%= profile.name %></p>
+      <p class="mb-1 text-muted"><strong>পেশাঃ</strong> <%= profile.title %></p>
+      <p class="mb-1 text-muted">
+        <strong>ইমেইলঃ</strong> <%= profile.user.email %>
+      </p>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="row">
+    <!-- Post Count -->
+    <div class="col-md-6 mb-4">
+      <div class="border rounded p-4 text-center bg-white">
+        <h5 class="text-dark">মোট পোস্ট</h5>
+        <h3 class="text-dark mt-2"><%= toBangla(profile.posts.length) %></h3>
+      </div>
+    </div>
+
+    <!-- Bookmark Count -->
+    <div class="col-md-6 mb-4">
+      <div class="border rounded p-4 text-center bg-white">
+        <h5 class="text-dark">মোট বুকমার্ক</h5>
+        <h3 class="text-dark mt-2">
+          <%= toBangla(profile.bookmarks.length) %>
+        </h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home Button -->
+  <div class="row">
+    <div class="col-12 text-center mt-4">
+      <a href="/" class="btn btn-dark px-4 py-2 rounded-pill">হোম পেজে যান</a>
+      <a href="/auth/logout" class="btn btn-outline-dark px-4 py-2 rounded-pill"
+        >লগ আউট করুন</a
+      >
+    </div>
+  </div>
+</div>
+
+<%- include('../../partials/footer') %>

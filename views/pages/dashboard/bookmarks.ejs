@@ -1,0 +1,150 @@
+<%- include('../../partials/header') %>
+
+<div class="d-flex justify-content-center">
+  <div class="container">
+    <div class="col-lg-12 offset-lg-0 col-md-12 offset-md-0">
+      <div class="row">
+        <div class="col-lg-12 offset-lg-0 my-4">
+          <!-- Navigation Tabs -->
+          <ul class="d-flex justify-content-center nav nav-tabs border-0 mb-5">
+            <li class="nav-item">
+              <a
+                class="nav-link tab rounded me-2 text-dark bg-white"
+                href="/dashboard"
+                >সামগ্রিক তথ্য</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link tab rounded me-2 text-dark bg-white"
+                href="/dashboard/edit-profile"
+                >প্রোফাইল এডিট</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link text-dark bg-white rounded me-2"
+                href="/dashboard/posts"
+                >সব পোস্ট</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active text-white bg-dark rounded me-2"
+                aria-current="page"
+                href="/dashboard/bookmarks"
+                >বুকমার্কস</a
+              >
+            </li>
+          </ul>
+          <div class="user-posts-section">
+            <% if (posts && posts.length > 0) { %>
+            <ul class="list-group">
+              <% posts.forEach(post => { %>
+              <li class="list-group-item py-4">
+                <div class="row align-items-center">
+                  <div class="col-12 col-md-4 mb-2 mb-md-0">
+                    <img
+                      src="<%= post.thumbnail %>"
+                      alt="Thumbnail"
+                      class="sub-dashboard-img img-fluid rounded"
+                      style="max-width: 100%"
+                    />
+                  </div>
+                  <div class="col-12 col-md-5">
+                    <div class="fw-semibold fs-5">
+                      <a
+                        href="/dashboard/post/single/<%= post._id %>"
+                        class="text-decoration-none text-dark"
+                        ><%= post.title %></a
+                      >
+                    </div>
+                    <small
+                      class="text-muted d-block mt-1"
+                      style="font-size: 0.95rem"
+                    >
+                      <a
+                        class="text-decoration-none text-muted"
+                        href="/author/<%= post.author._id %>"
+                        >লেখকঃ <%= post.author.name %></a
+                      >
+                    </small>
+                    <small
+                      class="text-muted d-block mt-1"
+                      style="font-size: 0.95rem"
+                    >
+                      প্রকাশিতঃ <%= new
+                      Date(post.createdAt).toLocaleDateString('bn-BD', { year:
+                      'numeric', month: 'long', day: 'numeric' }) %> • <%=
+                      post.readTime %> মিনিট পড়া
+                    </small>
+                  </div>
+                  <div class="col-12 col-md-3 text-md-end mt-3 mt-md-0">
+                    <a
+                      href="/dashboard/post/single/<%= post._id %>"
+                      class="btn btn-md btn-dark me-2 dashboard-posts-edit-btn mb-2"
+                      >পোস্ট পড়ুন</a
+                    >
+                    <form
+                      action="/dashboard/post/<%= post._id %>/remove-bookmark?redirect=bookmarks"
+                      method="post"
+                    >
+                      <button
+                        class="btn btn-md btn-dark me-2 dashboard-posts-edit-btn"
+                      >
+                        বুকমার্ক রিমুভ
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </li>
+              <% }) %>
+            </ul>
+            <% } else { %>
+            <p class="text-center text-muted">
+              আপনি এখনও কোনো পোস্ট বুকমার্ক করেন নি
+            </p>
+            <% } %>
+          </div>
+          <!-- pagination -->
+          <% if (totalPages > 1) { %>
+          <nav aria-label="Page navigation" class="mt-5">
+            <ul class="pagination justify-content-center">
+              <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+                <a
+                  class="page-link px-4 py-1 rounded-pill text-dark border-0 shadow-sm me-2"
+                  href="/dashboard/bookmarks?page=<%= currentPage - 1 %>"
+                >
+                  পূর্ববর্তী
+                </a>
+              </li>
+
+              <% for (let i = 1; i <= totalPages; i++) { %>
+              <li class="page-item">
+                <a
+                  class="page-link px-3 py-1 rounded-pill <%= i !== totalPages ? 'me-2' : '' %> <%= currentPage === i ? 'bg-dark text-white border-0' : 'text-dark border' %>"
+                  href="/dashboard/bookmarks?page=<%= i %>"
+                >
+                  <%= toBangla(i) %>
+                </a>
+              </li>
+              <% } %>
+
+              <li
+                class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>"
+              >
+                <a
+                  class="page-link px-4 py-1 rounded-pill text-dark border-0 shadow-sm ms-2"
+                  href="/dashboard/bookmarks?page=<%= currentPage + 1 %>"
+                >
+                  পরবর্তী
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

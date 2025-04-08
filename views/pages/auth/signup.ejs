@@ -1,0 +1,67 @@
+<%- include('../../partials/head') %>
+<div class="d-flex vh-100 align-items-center justify-content-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+        <div class="signup-form shadow-sm rounded p-4 p-lg-5">
+          <a href="/"
+            ><img
+              src="/images/mwc-logo.png"
+              style="display: block; width: 60px; margin: 0 auto"
+              alt="Logo"
+          /></a>
+          <h4 class="text-center mt-2">নতুন একাউন্ট তৈরি করুন</h4>
+          <form action="/auth/signup" method="post">
+            <div class="form-group mt-5 mb-3">
+              <label class="mb-2" for="username">আপনার ইউজার নাম</label>
+              <input type="text" id="username" class="form-control <%=
+              error.username ? "is-invalid" : "" %>" name="username" value="<%=
+              value.username || '' %>">
+              <div class="invalid-feedback">
+                <%= error.username && error.username %>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="email" class="mb-2">আপনার ইমেইল</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend3">@</span>
+                <input type="email" id="email" class="form-control <%=
+                error.email ? "is-invalid" : "" %>" name="email" value="<%=
+                value.email || '' %>">
+                <div class="invalid-feedback">
+                  <%= error.email && error.email %>
+                </div>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label class="mb-2" for="password">আপনার পাসওয়ার্ড</label>
+              <input type="password" id="password" class="form-control <%=
+              error.password ? "is-invalid" : "" %>" name="password" value="<%=
+              value.password || '' %>">
+              <div class="invalid-feedback">
+                <%= error.password && error.password %>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label class="mb-2" for="confirmpassword"
+                >পাসওয়ার্ড কনফার্ম করুন</label
+              >
+              <input type="password" id="confirmpassword" class="form-control
+              <%= error.confirmPassword ? "is-invalid" : "" %>"
+              name="confirmPassword">
+              <div class="invalid-feedback">
+                <%= error.confirmPassword && error.confirmPassword %>
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <input type="submit" class="btn btn-dark w-100" value="সাইন আপ" />
+            </div>
+          </form>
+          <a class="text-decoration-none text-dark" href="/auth/login"
+            >একাউন্ট তৈরি করা আছে? লগইন করুন</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

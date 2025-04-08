@@ -1,0 +1,141 @@
+<%- include('../../partials/header') %> <% if (flashSuccess &&
+flashSuccess.length > 0) { %>
+<div class="alert alert-success custom-flash custom-success">
+  <%= flashSuccess[0] %>
+</div>
+<% } %><% if (flashError && flashError.length > 0) { %>
+<div class="alert alert-danger custom-flash custom-danger">
+  <%= flashError[0] %>
+</div>
+<% } %>
+<div class="d-flex justify-content-center">
+  <div class="container">
+    <div class="col-lg-12 offset-lg-0 col-md-12 offset-md-0">
+      <div class="row">
+        <div class="col-lg-12 offset-lg-0 my-4">
+          <!-- Author and Date Info -->
+          <div class="mb-5 p-3 border rounded bg-light">
+            <p class="mb-1 fw-bold">পোস্ট করেছেনঃ <%= post.author.name %></p>
+            <div
+              class="custom-group d-flex flex-column flex-md-row justify-content-between"
+            >
+              <p class="mb-1 text-muted">
+                পোস্ট প্রকাশিতঃ <%= formattedDate %>
+              </p>
+              <p class="mb-1 text-muted">
+                আজকের সময়ঃ <span id="live-date-time"></span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Post Thumbnail -->
+          <div class="mb-4 text-center">
+            <img
+              class="img-fluid rounded"
+              src="<%= post.thumbnail %>"
+              alt="Post Thumbnail"
+            />
+          </div>
+
+          <!-- Post Title -->
+          <div class="custom-group d-flex justify-content-between">
+            <h2 class="fw-semibold mb-3"><%= post.title %></h2>
+
+            <% if (user && profile) { %> <% if
+            (profile.bookmarks.includes(post._id)) { %>
+            <form
+              action="/dashboard/post/<%= post._id %>/remove-bookmark"
+              method="post"
+            >
+              <button class="bookmark-btn" type="submit">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  width="25"
+                  height="25"
+                >
+                  <path
+                    d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z"
+                  />
+                </svg>
+              </button>
+            </form>
+            <% } else { %>
+            <form
+              action="/dashboard/post/<%= post._id %>/add-bookmark"
+              method="post"
+            >
+              <button class="bookmark-btn" type="submit">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 384 512"
+                  width="25"
+                  height="25"
+                >
+                  <path
+                    d="M0 48C0 21.5 21.5 0 48 0l0 48 0 393.4 130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4 336 48 48 48 48 0 336 0c26.5 0 48 21.5 48 48l0 440c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488L0 48z"
+                  />
+                </svg>
+              </button>
+            </form>
+            <%} %> <% } %>
+          </div>
+          <p class="text-muted mb-4">
+            পড়তে সময় লাগবেঃ <%= post.readTime %> মিনিট
+          </p>
+
+          <!-- Post Category & Views -->
+          <div class="d-flex justify-content-between">
+            <div class="mb-5">
+              <span class="bg-dark text-light rounded px-3 py-1 me-2"
+                >ক্যাটাগরি</span
+              >
+              <span><%= post.category %></span>
+            </div>
+            <div class="mb-5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 576 512"
+                width="20"
+                height="20"
+              >
+                <path
+                  d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64c-7.1 0-13.9-1.2-20.3-3.3c-5.5-1.8-11.9 1.6-11.7 7.4c.3 6.9 1.3 13.8 3.2 20.7c13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-11.1-41.5-47.8-69.4-88.6-71.1c-5.8-.2-9.2 6.1-7.4 11.7c2.1 6.4 3.3 13.2 3.3 20.3z"
+                />
+              </svg>
+              <span><%= post.views - 1 %></span>
+            </div>
+          </div>
+
+          <!-- Post Content -->
+          <div class="post-description mb-2"><%- post.htmlDescription %></div>
+
+          <!-- Post Tags -->
+          <div class="tags d-block mb-5">
+            <span class="bg-dark text-light rounded px-3 py-1 me-2"
+              >ট্যাগ সমূহ</span
+            >
+            <% post.tags.forEach(tag => { %>
+            <span><%= tag %><%= post.tags.length > 1 ? ', ' : '' %></span>
+            <% }) %>
+          </div>
+
+          <!-- Back Button -->
+          <a href="/" class="btn btn-outline-dark">হোমে ফিরে যান</a>
+
+          <% if (user && profile && profile._id && profile._id.toString() ===
+          post.author._id.toString()) { %>
+          <a
+            href="/dashboard/post/edit/<%= post._id %>"
+            class="btn btn-outline-dark"
+          >
+            এডিট করুন
+          </a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/scripts/liveDateTime.js"></script>

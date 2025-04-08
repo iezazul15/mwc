@@ -1,0 +1,77 @@
+<%- include('../../partials/header') %>
+
+<div class="container mt-5">
+  <h2 class="text-center mb-5">'<%= searchTerm %>' সংক্রান্ত সার্চ রেজাল্ট</h2>
+
+  <% if (posts && posts.length > 0) { %>
+  <div class="row">
+    <% posts.forEach(post => { %>
+    <div
+      class="<%= posts.length === 1 ? 'col-md-12' : 'col-md-6 col-lg-4' %> mb-4"
+    >
+      <div class="card blog-card shadow-sm border-0">
+        <img
+          src="<%= post.thumbnail %>"
+          class="card-img-top"
+          alt="<%= post.title %>"
+        />
+        <div class="card-body">
+          <h5 class="card-title fw-semibold">
+            <%= post.title.length > 74 ? post.title.slice(0,
+            post.title.lastIndexOf(" ", 74)) + ' ...' : post.title %>
+          </h5>
+          <p class="card-text text-muted">
+            <%= post.description.length > 100 ? post.description.replace('.',
+            '').slice(0, post.description.lastIndexOf(" ", 100)) + ' ...' :
+            post.description %>
+          </p>
+          <a
+            href="/dashboard/post/single/<%= post._id %>"
+            class="btn btn-dark btn-sm px-4"
+            >আরও পড়ুন</a
+          >
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+
+  <% if (totalPages > 1) { %>
+  <nav aria-label="Page navigation" class="mt-5">
+    <ul class="pagination justify-content-center">
+      <li class="page-item <%= currentPage === 1 ? 'disabled' : '' %>">
+        <a
+          class="page-link px-4 py-1 rounded-pill text-dark border-0 shadow-sm me-2"
+          href="/search?s=<%= searchTerm %>&page=<%= currentPage - 1 %>"
+        >
+          পূর্ববর্তী
+        </a>
+      </li>
+
+      <% for (let i = 1; i <= totalPages; i++) { %>
+      <li class="page-item">
+        <a
+          class="page-link px-3 py-1 rounded-pill <%= i !== totalPages ? 'me-2' : '' %> <%= currentPage === i ? 'bg-dark text-white border-0' : 'text-dark border' %>"
+          href="/search?s=<%= searchTerm %>&page=<%= i %>"
+        >
+          <%= toBangla(i) %>
+        </a>
+      </li>
+      <% } %>
+
+      <li class="page-item <%= currentPage === totalPages ? 'disabled' : '' %>">
+        <a
+          class="page-link px-4 py-1 rounded-pill text-dark border-0 shadow-sm ms-2"
+          href="/search?s=<%= searchTerm %>&page=<%= currentPage + 1 %>"
+        >
+          পরবর্তী
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <% } %> <% } else { %>
+  <p class="text-center">কোনো পোস্ট পাওয়া যায় নি আপনার সার্চ টার্ম দিয়ে</p>
+  <% } %>
+</div>
+
+<%- include('../../partials/footer') %>

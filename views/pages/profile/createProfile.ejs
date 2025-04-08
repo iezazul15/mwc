@@ -1,0 +1,132 @@
+<%- include('../../partials/header') %> <% if (flashError && flashError.length >
+0) { %>
+<div class="alert alert-danger custom-flash custom-danger">
+  <%= flashError[0] %>
+</div>
+<% } %>
+<div class="d-flex justify-content-center">
+  <div class="container">
+    <div class="col-lg-12 offset-lg-0 col-md-12 offset-md-0">
+      <div class="row">
+        <div class="col-lg-12 offset-lg-0 my-4">
+          <div class="create-profile-form">
+            <form
+              action="/dashboard/create-profile"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <!-- Profile Picture -->
+              <div class="profile-pic mb-3">
+                <img
+                  src="<%= user.profilePic %>"
+                  alt="Profile Pic"
+                  class="mb-4 d-block"
+                />
+                <a
+                  href="/dashboard/delete-profile-pic"
+                  class="btn btn-outline-danger <%= user.profilePic.includes('default-pro-picture-mwc.jpg') ? 'd-none' : 'd-inline-block' %>"
+                >
+                  ছবি ডিলিট করুন
+                </a>
+                <input
+                  type="file"
+                  id="profilePic"
+                  name="profile-pic"
+                  class="mt-3 form-control <%= fileError ? 'is-invalid' : '' %>"
+                  accept="image/*"
+                />
+                <div class="invalid-feedback">
+                  <%= fileError && fileError %>
+                </div>
+              </div>
+
+              <!-- Username -->
+              <div class="form-group mb-3">
+                <label class="mb-2" for="username">আপনার ইউজার নাম</label>
+                <input
+                  type="text"
+                  id="username"
+                  class="form-control"
+                  name="username"
+                  value="<%= user.username %>"
+                  disabled
+                />
+              </div>
+
+              <!-- Full Name -->
+              <div class="form-group mb-3">
+                <label class="mb-2" for="name">আপনার নাম</label>
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control <%= error.name && 'is-invalid' %>"
+                  name="name"
+                  placeholder="আপনার পূর্ণ নাম"
+                  value="<%= value.name %>"
+                />
+                <div class="invalid-feedback">
+                  <%= error.name && error.name %>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="form-group mb-3">
+                <label for="email" class="mb-2">আপনার ইমেইল</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  name="email"
+                  value="<%= user.email %>"
+                  disabled
+                />
+              </div>
+
+              <!-- Title -->
+              <div class="form-group mb-3">
+                <label class="mb-2" for="title">আপনার পেশা</label>
+                <input
+                  type="text"
+                  id="title"
+                  class="form-control <%= error.title && 'is-invalid' %>"
+                  name="title"
+                  placeholder="উদাহরণ: স্টুডেন্ট"
+                  value="<%= value.title %>"
+                />
+                <div class="invalid-feedback">
+                  <%= error.title && error.title %>
+                </div>
+              </div>
+
+              <!-- Bio -->
+              <div class="form-group mb-3">
+                <label class="mb-2" for="bio">নিজের সম্পর্কে</label>
+                <textarea
+                  id="bio"
+                  class="form-control <%= error.bio && 'is-invalid' %>"
+                  name="bio"
+                  rows="4"
+                  placeholder="আপনার সম্পর্কে কিছু লিখুন"
+                >
+<%= value.bio %></textarea
+                >
+                <div class="invalid-feedback">
+                  <%= error.bio && error.bio %>
+                </div>
+              </div>
+
+              <!-- Submit -->
+              <div class="form-group mb-3">
+                <input
+                  type="submit"
+                  class="btn btn-dark w-100"
+                  value="প্রোফাইল তৈরি করুন"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
