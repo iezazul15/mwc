@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const quill = new Quill("#description", {
     theme: "snow",
-    placeholder: "পোস্টের বিবরণ...",
     modules: {
       toolbar: [
         [{ header: [] }],
