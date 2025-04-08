@@ -9,7 +9,7 @@ const setLocals = require("./setLocals");
 
 // middlewares
 const middlewares = [
-  morgan("dev"),
+  morgan("combined"),
   express.static("node_modules/bootstrap/dist"),
   express.static("public"),
   express.json(),
