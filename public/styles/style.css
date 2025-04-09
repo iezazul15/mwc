@@ -99,7 +99,7 @@ svg {
 /* custom flash message */
 .custom-flash {
   position: fixed;
-  bottom: 80px;
+  top: 20px;
   right: 20px;
   z-index: 1050;
   min-width: 250px;
