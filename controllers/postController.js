@@ -282,6 +282,10 @@ const deletePostController = async (req, res, next) => {
       { user: req.user._id },
       { $pull: { posts: postId } }
     );
+    if (req.query.redirect === "posts") {
+      req.flash("flash-success", "পোস্ট সফলভাবে ডিলিট করা হয়েছে");
+      return res.redirect("/dashboard/posts");
+    }
     req.flash("flash-success", "পোস্ট সফলভাবে ডিলিট করা হয়েছে");
     res.redirect("/");
   } catch (e) {
