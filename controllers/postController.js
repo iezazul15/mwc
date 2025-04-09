@@ -370,6 +370,7 @@ const removeBookmarkController = async (req, res, next) => {
       await profile.save();
     }
     if (req.query.redirect === "bookmarks") {
+      req.flash("flash-success", "সফলভাবে বুকমার্ক সরানো হয়েছে");
       return res.redirect("/dashboard/bookmarks");
     }
     req.flash("flash-success", "সফলভাবে বুকমার্ক সরানো হয়েছে");
