@@ -116,8 +116,10 @@ flashSuccess.length > 0) { %>
               class="bg-dark text-light rounded px-3 py-1 me-2 d-inline-block mb-1"
               >ট্যাগ সমূহ</span
             >
-            <% post.tags.forEach(tag => { %>
-            <span><%= tag %><%= post.tags.length > 1 ? ', ' : '' %></span>
+            <% post.tags.forEach((tag, index) => { %>
+            <span
+              ><%= tag %><%= index !== post.tags.length - 1 ? ', ' : '' %></span
+            >
             <% }) %>
           </div>
 
